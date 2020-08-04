@@ -1,2 +1,2 @@
-# Secret Code Fun
+# Cipher
 Creating a simple secret coding/encoding app with my son.
