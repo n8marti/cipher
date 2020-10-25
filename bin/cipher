@@ -9,4 +9,5 @@ sys.path.append(str(modules))
 from cipher import app
 
 if __name__ == '__main__':
-    app
+    status = app.app.run(sys.argv)
+    sys.exit(status)
