@@ -1,7 +1,6 @@
 # Cipher
-[[ https://github.com/n8marti/cipher/blob/master/data/icons/cipher.svg | height = 600px ]]
-![Cipher](data/icons/cipher.svg)
-
 Creating a simple secret coding/encoding app with my son.
 
+
+![Cipher](data/icons/cipher.svg)
 > Icon made by [Freepik]("https://www.flaticon.com/authors/freepik") from [www.flaticon.com]("https://www.flaticon.com/").
