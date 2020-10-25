@@ -1,5 +1,5 @@
 # Cipher
-[[ data/icons/cipher.svg | height = 600px ]]
+[[ https://github.com/n8marti/cipher/data/icons/cipher.svg | height = 600px ]]
 ![Cipher](data/icons/cipher.svg)
 
 Creating a simple secret coding/encoding app with my son.
