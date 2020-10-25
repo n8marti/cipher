@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
- 
+
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+from pathlib import Path
 
 class CipherApp(Gtk.Application):
     def __init__(self):
         super().__init__()
-        
-        self.ui_dir = '/home/nate/cipher/data/ui'
-        
+
+        repo = Path(__file__).parents[1]
+        self.ui_dir = str(repo / 'data' / 'ui')
+
         # Define the code system.
         self.alphabet = [
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -31,7 +33,7 @@ class CipherApp(Gtk.Application):
             "on_button_clear_clicked": self.on_button_clear_clicked,
             "on_code_choice_changed": self.on_code_choice_changed,
         }
-        
+
     def do_startup(self):
         Gtk.Application.do_startup(self)
         self.builder = Gtk.Builder()
@@ -45,12 +47,12 @@ class CipherApp(Gtk.Application):
         self.entry_input = self.text_input.get_buffer()
         self.entry_output = self.text_output.get_buffer()
 
-        
+
     def do_activate(self):
         self.add_window(self.window)
         self.window.show()
         self.builder.connect_signals(self.handlers)
-    
+
     def transform_text(self, text_to_convert, transformation):
         converted_text = []
         for c in text_to_convert:
@@ -59,32 +61,32 @@ class CipherApp(Gtk.Application):
             else:
                 converted_text.append(transformation[c])
         return converted_text
-        
+
     def encode_opt1(self, orig_phrase):
         encode_pairs = dict(zip(self.alphabet, self.opt1))
         output = self.transform_text(orig_phrase, encode_pairs)
         return output
-        
+
     def decode_opt1(self, orig_phrase):
         encode_pairs = dict(zip(self.alphabet, self.opt1))
         output = self.transform_text(orig_phrase, encode_pairs)
         return output
-        
+
     def encode_opt2(self, orig_phrase):
         encode_pairs = dict(zip(self.alphabet, self.opt2))
         output = self.transform_text(orig_phrase, encode_pairs)
         return output
-        
+
     def decode_opt2(self, orig_phrase):
         decode_pairs = dict(zip(self.opt2, self.alphabet))
         output = self.transform_text(orig_phrase, decode_pairs)
         return output
-        
+
     def encode_opt3(self, orig_phrase):
         out1 = self.encode_opt1(orig_phrase)
         out2 = self.encode_opt2(out1)
         return out2
-        
+
     def decode_opt3(self, orig_phrase):
         out2 = self.decode_opt2(orig_phrase)
         out1 = self.decode_opt1(out2)
@@ -99,7 +101,7 @@ class CipherApp(Gtk.Application):
                 uppers.append(num)
             num += 1
         return uppers
-        
+
     def convert_text(self, text_to_convert, picked_code, action):
         # Convert the text (output as a list) using the dictionary.
         if picked_code == 'opt1':
@@ -129,7 +131,7 @@ class CipherApp(Gtk.Application):
             model = self.code_choice.get_model()
             text = model[tree_iter][0]
             print(text)
-        
+
     def on_button_encode_clicked(self, button):
         self.entry_output.set_text('')
         start = self.entry_input.get_start_iter()
@@ -160,7 +162,6 @@ class CipherApp(Gtk.Application):
     def on_button_clear_clicked(self, button):
         self.entry_output.set_text('')
         self.entry_input.set_text('')
-    
+
 
 app = CipherApp()
-

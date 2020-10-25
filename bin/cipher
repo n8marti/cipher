@@ -4,8 +4,8 @@ import sys
 
 from pathlib import Path
 
-modules = Path('/', 'home', 'nate', 'cipher')
-sys.path.append(str(modules))
+repo = Path(__file__).parents[1]
+sys.path.append(str(repo))
 from cipher import app
 
 if __name__ == '__main__':
