@@ -107,14 +107,14 @@ class CipherApp(Gtk.Application):
         if picked_code == 'opt1':
             converted_text = self.encode_opt1(text_to_convert)
         elif picked_code == 'opt2':
-            if action == 'encode':
+            if action == 'Encode':
                 converted_text = self.encode_opt2(text_to_convert)
-            if action == 'decode':
+            if action == 'Decode':
                 converted_text = self.decode_opt2(text_to_convert)
         elif picked_code == 'opt3':
-            if action == 'encode':
+            if action == 'Encode':
                 converted_text = self.encode_opt3(text_to_convert)
-            if action == 'decode':
+            if action == 'Decode':
                 converted_text = self.decode_opt3(text_to_convert)
         return converted_text
 
@@ -133,28 +133,21 @@ class CipherApp(Gtk.Application):
             print(text)
 
     def on_button_encode_clicked(self, button):
+        self.encode_or_decode_text(button)
+
+    def on_button_decode_clicked(self, button):
+        self.encode_or_decode_text(button)
+        
+    def encode_or_decode_text(self, button):
+        action = button.get_label()
         self.entry_output.set_text('')
         start = self.entry_input.get_start_iter()
         end = self.entry_input.get_end_iter()
         original_phrase = self.entry_input.get_text(start, end, False)
         uppers = self.get_uppers(original_phrase)
         text_to_convert = original_phrase.lower() if original_phrase else ''
-        self.action = 'encode'
         self.picked_code = self.code_choice.get_active_id()
-        converted_text = self.convert_text(text_to_convert, self.picked_code, self.action)
-        output_text = self.set_uppers(converted_text, uppers)
-        output_phrase = ''.join(output_text)
-        self.entry_output.set_text(output_phrase)
-        return output_phrase
-
-    def on_button_decode_clicked(self, button):
-        self.entry_output.set_text('')
-        original_phrase = self.entry_input.get_text()
-        uppers = self.get_uppers(original_phrase)
-        text_to_convert = original_phrase.lower() if original_phrase else ''
-        self.action = 'decode'
-        self.picked_code = self.code_choice.get_active_id()
-        converted_text = self.convert_text(text_to_convert, self.picked_code, self.action)
+        converted_text = self.convert_text(text_to_convert, self.picked_code, action)
         output_text = self.set_uppers(converted_text, uppers)
         output_phrase = ''.join(output_text)
         self.entry_output.set_text(output_phrase)
