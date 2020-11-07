@@ -4,6 +4,11 @@ import sys
 
 from pathlib import Path
 
+# Account for possible PyInstaller build.
+if Path(sys._MEIPASS).exists():
+    sys.path.append(sys._MEIPASS)
+
+# Add app module.
 repo = Path(__file__).parents[1]
 sys.path.append(str(repo))
 from cipher import app
