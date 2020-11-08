@@ -4,13 +4,14 @@ import sys
 
 from pathlib import Path
 
-# Account for possible PyInstaller build.
-if Path(__file__).parents[0] == sys._MEIPASS:
-    sys.path.append(sys._MEIPASS)
-
 # Add app module.
-repo = Path(__file__).parents[1]
-sys.path.append(str(repo))
+if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+    # Using PyInstaller.
+    sys.path.append(sys._MEIPASS)
+else:
+    # Using Python3 interpreter.
+    repo = Path(__file__).parents[1]
+    sys.path.append(str(repo))
 from cipher import app
 
 if __name__ == '__main__':
