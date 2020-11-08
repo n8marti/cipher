@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 
 # Account for possible PyInstaller build.
-if Path(sys._MEIPASS).exists():
+if Path(__file__).parents[0] == sys._MEIPASS:
     sys.path.append(sys._MEIPASS)
 
 # Add app module.
